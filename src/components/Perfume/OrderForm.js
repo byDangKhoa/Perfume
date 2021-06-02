@@ -1,14 +1,18 @@
 import classes from './OrderForm.module.scss'
 import useInput from '../hooks/useInput'
-import React, { Fragment, useContext, useState } from 'react'
-import CartContex from '../../Context/CartContext'
+import React, { Fragment, useState } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { cartActions } from '../../store/cart'
+// import CartContex from '../../Context/CartContext'
 const OrderForm = function (props) {
   const [inputName, , onInputNameHandler, nameHasError] = useInput()
   const [inputPhone, , onInputPhoneHandler, phoneHasError] = useInput()
   const [inputAddress, , onInputAddressHandler, addressHasError] = useInput()
   const [inputEmail, , onInputEmailHandler, emailHasError] = useInput()
   const [isSubmiting, setIsSubmiting] = useState(true)
-  const ctxCart = useContext(CartContex)
+  // const ctxCart = useContext(CartContex)
+  const getCartItems = useSelector((state) => state.cart.items)
+  const dispatch = useDispatch()
 
   const sendOrder = async function (data) {
     const res = await fetch(
@@ -25,7 +29,7 @@ const OrderForm = function (props) {
   const onSubmitOrderHandler = function (e) {
     e.preventDefault()
     const loadedCusData = {
-      item: ctxCart.items,
+      item: getCartItems,
       user: {
         name: inputName,
         phone: inputPhone,
@@ -34,7 +38,7 @@ const OrderForm = function (props) {
       },
     }
     sendOrder(loadedCusData)
-    ctxCart.onResetItemHandler()
+    dispatch(cartActions.resetItemHandler())
     setIsSubmiting(false)
   }
 
@@ -93,7 +97,7 @@ const OrderForm = function (props) {
         </Fragment>
       )}
       <div className={classes.actions}>
-        {!isSubmiting && (
+        {isSubmiting && (
           <button type='button' onClick={props.onCloseHandler}>
             Cancel
           </button>

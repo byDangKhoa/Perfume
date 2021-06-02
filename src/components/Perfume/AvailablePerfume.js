@@ -19,7 +19,7 @@ const AvailablePerfume = (props) => {
         id: perfumeKey,
         name: dataPerfume[perfumeKey].name,
         brand: dataPerfume[perfumeKey].brand,
-        price: dataPerfume[perfumeKey].price,
+        price: +dataPerfume[perfumeKey].price,
       })
     }
     setPerfumeData(loadedData)

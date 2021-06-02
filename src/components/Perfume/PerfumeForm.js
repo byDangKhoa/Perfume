@@ -1,11 +1,12 @@
-import { useContext, useState } from 'react'
+import { useState } from 'react'
 import classes from './PerfumeForm.module.scss'
-import CartContext from '../../Context/CartContext'
+import { useDispatch } from 'react-redux'
+import { cartActions } from '../../store/cart'
 
 const PerfumeForm = (props) => {
   const [addIsValid, setAddIsValid] = useState(true)
-  const [amountInput, setAmountInput] = useState('')
-  const ctxCart = useContext(CartContext)
+  const [amountInput, setAmountInput] = useState(null)
+  const dispatch = useDispatch()
   const onInputHandler = (e) => {
     setAmountInput(e.target.value)
   }
@@ -14,23 +15,30 @@ const PerfumeForm = (props) => {
     setAddIsValid(true)
     if (
       amountInput.trim().length === 0 ||
-      amountInput < 1 ||
-      amountInput > 10
+      +amountInput < 1 ||
+      +amountInput > 10
     ) {
       setAddIsValid(false)
       return
     }
-    addAmountToCartHandler(+amountInput)
+    dispatch(
+      cartActions.addItemHandler({
+        id: props.id,
+        amount: +amountInput,
+        price: props.price,
+        name: props.name,
+      })
+    )
   }
 
-  const addAmountToCartHandler = (amount) => {
-    ctxCart.onAddItemHandler({
-      id: props.id,
-      amount: amount,
-      price: props.price,
-      name: props.name,
-    })
-  }
+  // const addAmountToCartHandler = (amount) => {
+  // ctxCart.onAddItemHandler({
+  //   id: props.id,
+  //   amount: amount,
+  //   price: props.price,
+  //   name: props.name,
+  // })
+  // }
   return (
     <form onSubmit={onAddHandler} className={classes.form}>
       <div className={classes.input}>

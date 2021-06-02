@@ -1,24 +1,28 @@
 import classes from './Cart.module.scss'
 import React, { useContext, useState } from 'react'
 import Modal from '../UI/Modal'
-import ShowCart from '../../Context/ShowCart'
-import CartContext from '../../Context/CartContext'
 import CartItem from './CartItem'
 import OrdeForm from '../Perfume/OrderForm'
+import { useDispatch, useSelector } from 'react-redux'
+import { showCartActions } from '../../store/ui'
+import { cartActions } from '../../store/cart'
 const Cart = (props) => {
-  const ctxShowCart = useContext(ShowCart)
-  const ctxCart = useContext(CartContext)
-  const displayCart = ctxCart.items.length > 0
+  // const ctxShowCart = useContext(ShowCart)
+  // const ctxCart = useContext(CartContext)
+  const dispatch = useDispatch()
+  const getCartItems = useSelector((state) => state.cart.items)
+  const getCartTotalAmount = useSelector((state) => state.cart.totalAmount)
+  const displayCart = getCartItems.length > 0
   const [displayForm, setDisplayForm] = useState(false)
   const onPlusHandler = (item) => {
-    ctxCart.onAddItemHandler({ ...item, amount: 1 })
+    dispatch(cartActions.addItemHandler(item))
   }
-  const onSubtractHandler = (id) => {
-    ctxCart.onRemoveItemHandler(id)
+  const onSubtractHandler = (item) => {
+    dispatch(cartActions.removeItemHandler(item))
   }
   const cartItems = (
     <ul className={classes['cart-items']}>
-      {ctxCart.items.map((item) => (
+      {getCartItems.map((item) => (
         <CartItem
           key={item.id}
           id={item.id}
@@ -26,13 +30,13 @@ const Cart = (props) => {
           amount={item.amount}
           price={item.price}
           onPlus={onPlusHandler.bind(null, item)}
-          onSubtract={onSubtractHandler.bind(null, item.id)}
+          onSubtract={onSubtractHandler.bind(null, item)}
         />
       ))}
     </ul>
   )
   const onCloseHandler = () => {
-    ctxShowCart.setCartDisplay(false)
+    dispatch(showCartActions.onCloseHandler())
   }
   const onOrderHandler = function () {
     setDisplayForm(true)
@@ -41,12 +45,12 @@ const Cart = (props) => {
   return (
     <Modal onModalClose={onCloseHandler} className={classes.item}>
       {cartItems}
-      {ctxCart.items.length === 0 ? (
+      {getCartItems.length === 0 ? (
         <h2 className={classes.emty}>Your cart is emty</h2>
       ) : (
         <div className={classes.total}>
           <span>Total Amount</span>
-          <span>{`${ctxCart.totalAmount}k VND`}</span>
+          <span>{`${getCartTotalAmount}k VND`}</span>
         </div>
       )}
       {!displayForm && (
