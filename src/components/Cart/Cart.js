@@ -1,5 +1,5 @@
 import classes from './Cart.module.scss'
-import React, { useContext, useState } from 'react'
+import React, { useState } from 'react'
 import Modal from '../UI/Modal'
 import CartItem from './CartItem'
 import OrdeForm from '../Perfume/OrderForm'
@@ -15,7 +15,7 @@ const Cart = (props) => {
   const displayCart = getCartItems.length > 0
   const [displayForm, setDisplayForm] = useState(false)
   const onPlusHandler = (item) => {
-    dispatch(cartActions.addItemHandler(item))
+    dispatch(cartActions.plusItemHandler(item))
   }
   const onSubtractHandler = (item) => {
     dispatch(cartActions.removeItemHandler(item))

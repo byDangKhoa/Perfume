@@ -7,9 +7,25 @@ const cartSlice = createSlice({
     totalAmount: 0,
   },
   reducers: {
+    plusItemHandler: function (state, action) {
+      const newItem = action.payload
+      state.totalAmount = state.totalAmount + newItem.price
+      const existingItem = state.items.find((item) => item.id === newItem.id)
+      if (!existingItem) {
+        state.items.push({
+          id: newItem.id,
+          name: newItem.name,
+          price: newItem.price,
+          amount: newItem.amount,
+        })
+      }
+      if (existingItem) {
+        existingItem.amount = existingItem.amount + 1
+      }
+    },
     addItemHandler: function (state, action) {
       const newItem = action.payload
-      state.totalAmount = state.totalAmount + +newItem.price * +newItem.amount
+      state.totalAmount = state.totalAmount + newItem.price * newItem.amount
       const existingItem = state.items.find((item) => item.id === newItem.id)
       if (!existingItem) {
         state.items.push({
@@ -20,7 +36,7 @@ const cartSlice = createSlice({
         })
       }
       if (existingItem) {
-        existingItem.amount = +existingItem.amount + 1
+        existingItem.amount = existingItem.amount + newItem.amount
       }
     },
     removeItemHandler: function (state, action) {

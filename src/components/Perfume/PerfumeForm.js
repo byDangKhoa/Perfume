@@ -15,8 +15,8 @@ const PerfumeForm = (props) => {
     setAddIsValid(true)
     if (
       amountInput.trim().length === 0 ||
-      +amountInput < 1 ||
-      +amountInput > 10
+      amountInput < 1 ||
+      amountInput > 10
     ) {
       setAddIsValid(false)
       return
@@ -29,6 +29,7 @@ const PerfumeForm = (props) => {
         name: props.name,
       })
     )
+    setAmountInput(null)
   }
 
   // const addAmountToCartHandler = (amount) => {
