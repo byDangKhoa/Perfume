@@ -54,7 +54,9 @@ const PerfumeForm = (props) => {
       </div>
       <button>+Add</button>
       {addIsValid === false && (
-        <p className={classes.error}>Please enter the correct amount!</p>
+        <p className={classes.error}>
+          amount must be smaller than 10 and bigger than 1
+        </p>
       )}
     </form>
   )
