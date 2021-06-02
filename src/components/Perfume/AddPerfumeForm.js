@@ -6,7 +6,7 @@ const AddPerfumeForm = function (props) {
   const [inputPrice, setInputPrice, onInputPriceHandler] = useInput()
   const sendPerfumeData = async function (perfume) {
     const res = await fetch(
-      'https://react-http-request-9084f-default-rtdb.asia-southeast1.firebasedatabase.app/perfume1.json',
+      'https://react-http-request-9084f-default-rtdb.asia-southeast1.firebasedatabase.app/perfume.json',
       {
         method: 'POST',
         body: JSON.stringify(perfume),

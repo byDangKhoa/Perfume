@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { getCartData } from './cart-actions'
 
 const cartSlice = createSlice({
   name: 'cart',
@@ -51,6 +52,12 @@ const cartSlice = createSlice({
     },
     resetItemHandler(state) {
       return state
+    },
+  },
+  extraReducers: {
+    [getCartData.fulfilled]: function (state, action) {
+      state.items = action.payload.items
+      state.totalAmount = action.payload.items
     },
   },
 })
