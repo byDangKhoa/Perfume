@@ -1,8 +1,12 @@
 import './App.css'
-import Header from './components/Layout/Header'
 import React, { Fragment } from 'react'
 import Perfume from './components/Perfume/Perfume'
 import Cart from './components/Cart/Cart'
+import Login from './components/Login/Login'
+import ImportPerfume from './components/Perfume/ImportPerfume'
+import BackgroundImg from './components/Layout/BackgroundImg'
+import Navigator from './components/Layout/Navigator'
+import { Route, Redirect, Switch } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { getCartData, sendCartData } from './store/cart-actions'
 import { useEffect } from 'react'
@@ -24,11 +28,23 @@ function App() {
   }, [getCart, dispatch])
   return (
     <Fragment>
-      {showCart === true && <Cart />}
-      <Header />
-      <main>
-        <Perfume />
-      </main>
+      <Navigator />
+      <Switch>
+        <Route path='/' exact>
+          <Redirect to='/main'></Redirect>
+        </Route>
+        <Route exact path='/main'>
+          <BackgroundImg />
+          <Perfume />
+          {showCart === true && <Cart />}
+        </Route>
+        <Route path='/login'>
+          <Login />
+        </Route>
+        <Route path='/import'>
+          <ImportPerfume />
+        </Route>
+      </Switch>
     </Fragment>
   )
 }

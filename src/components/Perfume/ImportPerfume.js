@@ -1,6 +1,7 @@
 import useInput from '../hooks/useInput'
+import './ImportPerfume.scss'
 
-const AddPerfumeForm = function (props) {
+const ImportPerfume = function (props) {
   const [inputName, setInputName, onInputNameHandler] = useInput()
   const [inputBrand, setInputBrand, onInputBrandHandler] = useInput()
   const [inputPrice, setInputPrice, onInputPriceHandler] = useInput()
@@ -34,7 +35,7 @@ const AddPerfumeForm = function (props) {
   }
 
   return (
-    <form onSubmit={onSubmitHandler}>
+    <form onSubmit={onSubmitHandler} className='import'>
       <div>
         <label htmlFor='name'>Name</label>
         <input
@@ -66,4 +67,4 @@ const AddPerfumeForm = function (props) {
     </form>
   )
 }
-export default AddPerfumeForm
+export default ImportPerfume

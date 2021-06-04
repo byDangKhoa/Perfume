@@ -2,7 +2,9 @@ import React, { useEffect, useState } from 'react'
 import classes from './AvailablePerfume.module.scss'
 import Card from '../UI/Card'
 import PerFumeForm from './PerfumeForm'
-// import AddPerfumeForm from './AddPerfumeForm'
+// import { Route } from 'react-router-dom'
+// import AddPerfumeForm from '../../components/Perfume/AddPerfumeForm'
+
 const AvailablePerfume = (props) => {
   const [perfumeData, setPerfumeData] = useState([])
   const fetchPerfumeData = async function () {
@@ -29,11 +31,13 @@ const AvailablePerfume = (props) => {
   }, [])
   return (
     <section className={classes.perfumes}>
-      {/* <AddPerfumeForm
-        fetchPerfumeData={fetchPerfumeData}
-        setPerfumeData={setPerfumeData}
-        perfumeData={perfumeData}
-      /> */}
+      {/* <Route exact path='/main/import'>
+        <AddPerfumeForm
+          fetchPerfumeData={fetchPerfumeData}
+          setPerfumeData={setPerfumeData}
+          perfumeData={perfumeData}
+        />
+      </Route> */}
       <ul>
         {perfumeData.map(function (perf) {
           const price = `${perf.price}k VND`
